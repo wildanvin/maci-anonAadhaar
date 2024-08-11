@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 // import AadhaarProofButton from "./_components/AadhaarProofButton";
-import RegisterButton from "./_components/RegisterButton";
+// import RegisterButton from "./_components/RegisterButton";
 import RegisterWithAadhaarProof from "./_components/RegisterWithAadhaarProof";
 import type { NextPage } from "next";
 import HeroImage from "~~/assets/private_voting.png";
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
                 Anti-Collusion Infrastructure (MACI).
               </p>
               <div className="text-center">
-                <RegisterButton />
+                {/* <RegisterButton /> */}
                 <RegisterWithAadhaarProof />
 
                 {/* <AadhaarProofButton /> */}

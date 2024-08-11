@@ -41,7 +41,7 @@ export default function RegisterWithAadhaarProof() {
   if (!keypair) {
     return (
       <button className="border border-slate-600 bg-primary px-3 py-2 rounded-lg font-bold" onClick={generateKeypair}>
-        Login with Aadhaar
+        Login with MACI
       </button>
     );
   }
