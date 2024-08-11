@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import AadhaarProofButton from "./_components/AadhaarProofButton";
+// import AadhaarProofButton from "./_components/AadhaarProofButton";
 import RegisterButton from "./_components/RegisterButton";
+import RegisterWithAadhaarProof from "./_components/RegisterWithAadhaarProof";
 import type { NextPage } from "next";
 import HeroImage from "~~/assets/private_voting.png";
 import { useAuthUserOnly } from "~~/hooks/useAuthUserOnly";
@@ -24,7 +25,9 @@ const Home: NextPage = () => {
               </p>
               <div className="text-center">
                 <RegisterButton />
-                <AadhaarProofButton />
+                <RegisterWithAadhaarProof />
+
+                {/* <AadhaarProofButton /> */}
               </div>
             </div>
             <div className="flex-1">
