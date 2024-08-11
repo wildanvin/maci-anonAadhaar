@@ -40,6 +40,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@anon-aadhaar/contracts@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@anon-aadhaar/contracts@npm:2.4.0"
+  checksum: 87e1b49a7b42f2357c6040c63e914d3595842df67b3eac3a77489a2471ab19f775c2fb3c746e3248d0494c7ef6c1db0d0b75701ff3caf7a9dead805d78393403
+  languageName: node
+  linkType: hard
+
 "@arrows/array@npm:^1.4.1":
   version: 1.4.1
   resolution: "@arrows/array@npm:1.4.1"
@@ -2122,6 +2129,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@se-2/hardhat@workspace:packages/hardhat"
   dependencies:
+    "@anon-aadhaar/contracts": ^2.4.0
     "@commander-js/extra-typings": ^12.0.1
     "@ethersproject/abi": ~5.7.0
     "@ethersproject/providers": ~5.7.1

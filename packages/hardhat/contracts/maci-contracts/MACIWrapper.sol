@@ -8,6 +8,7 @@ import { IMessageProcessorFactory } from "maci-contracts/contracts/interfaces/IM
 import { ITallyFactory } from "maci-contracts/contracts/interfaces/ITallyFactory.sol";
 import { SignUpGatekeeper } from "maci-contracts/contracts/gatekeepers/SignUpGatekeeper.sol";
 import { InitialVoiceCreditProxy } from "maci-contracts/contracts/initialVoiceCreditProxy/InitialVoiceCreditProxy.sol";
+import '@anon-aadhaar/contracts/interfaces/IAnonAadhaar.sol';
 
 /// @title MACI - Minimum Anti-Collusion Infrastructure Version 1
 /// @notice A contract which allows users to sign up, and deploy new polls
@@ -25,6 +26,22 @@ contract MACIWrapper is MACI, Ownable(msg.sender) {
 		string tallyJsonCID;
 	}
 
+
+	/**Begining of AnonAadhaar integration */
+	struct AnonProof{
+		uint nullifierSeed;
+        uint nullifier;
+        uint timestamp;
+        uint signal;
+        uint[4] revealArray;
+        uint[8] groth16Proof;
+	}
+
+    address public anonAadhaarVerifierAddr = 0x6bE8Cec7a06BA19c39ef328e8c8940cEfeF7E281; //hardcoded sepolia verifier for maximum hacking experience ;)
+
+	error ProofIsFalse();
+	event VerifyProof(address indexed caller, address indexed verifier, bool indexed verified);
+	/**End of AnonAadhaar integration */
 	mapping(uint256 => PollData) internal _polls;
 
 	TreeDepths public treeDepths;
@@ -115,6 +132,69 @@ contract MACIWrapper is MACI, Ownable(msg.sender) {
 		isPublicKeyRegistered[_pubKey.x][_pubKey.y] = true;
 	}
 
+	/**Begining of AnonAadhaar integration */
+	function verifiedAadhaar(AnonProof memory _anonProof) public view returns (bool) {
+		bool verified = IAnonAadhaar(anonAadhaarVerifierAddr).verifyAnonAadhaarProof(
+			_anonProof.nullifierSeed,
+			_anonProof.nullifier,
+			_anonProof.timestamp, 
+			_anonProof.signal, 
+			_anonProof.revealArray,
+			_anonProof.groth16Proof
+		);
+		
+		return verified;
+	}
+
+    function verifiedAadhaar2(
+							uint _nullifierSeed, 
+							uint _nullifier, 
+							uint _timestamp, 
+							uint _signal, 
+							uint[4] memory _revealArray, 
+							uint[8] memory _groth16Proof
+							) public view returns (bool) {
+		bool verified = IAnonAadhaar(anonAadhaarVerifierAddr).verifyAnonAadhaarProof(
+                _nullifierSeed, // nulifier seed
+                _nullifier,
+                _timestamp,
+                _signal,
+                _revealArray,
+                _groth16Proof
+            );
+		
+		return verified;
+	}
+
+	function signUpAadhaar(
+		PubKey memory _pubKey,
+		bytes memory _signUpGatekeeperData,
+		bytes memory _initialVoiceCreditProxyData,
+		AnonProof memory _anonProof
+	) public {
+
+		// check if user has an anonAadhaar proof	
+		if (!verifiedAadhaar(_anonProof)) revert ProofIsFalse();
+
+		// check if the pubkey is already registered
+		if (isPublicKeyRegistered[_pubKey.x][_pubKey.y]) revert PubKeyAlreadyRegistered();
+
+		super.signUp(
+			_pubKey,
+			_signUpGatekeeperData,
+			_initialVoiceCreditProxyData
+		);
+
+		isPublicKeyRegistered[_pubKey.x][_pubKey.y] = true;
+	}	
+
+	function dumbReturn (uint[2] memory myArr) public pure returns (bool){
+		if (myArr[0] == 1 && myArr[1] == 3) {
+        return true;
+    }
+    return false;
+	}
+	/**Ends of AnonAadhaar integration */
 	function createPoll(
 		string calldata _name,
 		string[] calldata _options,
