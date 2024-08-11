@@ -4,6 +4,8 @@ import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 export default function RegisterWithAadhaarProof() {
   const { keypair, isRegistered, generateKeypair } = useAuthContext();
 
+  // to do, get the proof from the AnonAahaar prover
+  // right now is hadcoded
   const anonProof = {
     nullifierSeed: 1356901n,
     nullifier: 20979784874714056060541051260689831410980619730749142799673303954514703681875n,

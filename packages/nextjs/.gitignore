@@ -19,6 +19,11 @@
 .DS_Store
 *.pem
 
+#prover downloads
+/public/*.wasm
+/public/*.zkey
+/public/vkey.json
+
 # debug
 npm-debug.log*
 yarn-debug.log*

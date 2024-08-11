@@ -1,3 +1,7 @@
+# Notes
+
+To use this repo as it is, please [download](https://documentation.anon-aadhaar.pse.dev/docs/quick-setup#run-anon-aadhaar-on-localhost-mode) the wasm, zkey and json files and put them in `packages/nextjs/public`.
+
 # Test proof:
 
 - nullifierSeed: 1356901
@@ -7,21 +11,7 @@
 - revealArray: [0,0,0,0]
 - groth16Proof: [12828900230146543594478658752150624615122494885738128275826725493364383328288,19469316686023506377399184555392055330124109950859140428974756092630763970162,10455107533057272822039075089191026900775354061661973208452813809659488439708,17254337159427966584531508653125692941434670590119436795591032470922546707862,14609417139310070813329495819573641584077493065312370986130365378279749606056,8165214427110633620929278824231065019818254910366123684685891680535414094122,9513210418062207665695878833318595340168203436446687627592383012933933129473,20219862337431553459244682776269593961320859825385401397000368261059617887035]
 
-# Notes
-
-1. generate the zkey folder by cloning the maci repo and running:
-   ```
-   git clone https://github.com/privacy-scaling-explorations/maci.git && \
-   cd maci && \
-   pnpm i && \
-   pnpm download-zkeys:test
-   ```
-2. the `zkey` folder will be in the `cli` folder of the maci repo, copy it and paste it in the `/packages/hardhat/` dir
-3. contracts should compile by runnig `yarn compile`
-4. change ownership of the `MACIWrapper.sol` contract by modifiying `packages\hardhat\deploy\10_generate_address_file.ts` at line 20.
-5. interact with the protocol(?)
-
-## For using maci-cli
+## Lessons for using maci-cli
 
 1. In the maci repo:
    ```

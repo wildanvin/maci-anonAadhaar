@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+// import type { AppProps } from "next/app";
+import { AnonAadhaarProvider } from "@anon-aadhaar/react";
+// import { useEffect, useState } from "react";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import { useTheme } from "next-themes";
 import { Toaster } from "react-hot-toast";
@@ -55,7 +58,17 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
         theme={mounted ? (isDarkMode ? darkTheme() : lightTheme()) : lightTheme()}
       >
         <AuthContextProvider>
-          <ScaffoldEthApp>{children}</ScaffoldEthApp>
+          <AnonAadhaarProvider
+            _useTestAadhaar={true}
+            _artifactslinks={{
+              zkey_url: "/circuit_final.zkey",
+              vkey_url: "/vkey.json",
+              wasm_url: "/aadhaar-verifier.wasm",
+            }}
+            _appName="Anon Aadhaar"
+          >
+            <ScaffoldEthApp>{children}</ScaffoldEthApp>
+          </AnonAadhaarProvider>
         </AuthContextProvider>
       </RainbowKitProvider>
     </WagmiConfig>
